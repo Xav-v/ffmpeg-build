@@ -14,6 +14,8 @@ fi
 
 : ${ARCH?}
 
+#OUTPUT_DIR=artifacts/ffmpeg-$FFMPEG_VERSION-audio-$ARCH-linux-gnu
+
 case $ARCH in
     x86_64)
         ;;
@@ -72,11 +74,11 @@ trap 'rm -rf $BUILD_DIR' EXIT
 cd $BUILD_DIR
 tar --strip-components=1 -xf $BASE_DIR/$FFMPEG_TARBALL
 
-FFMPEG_CONFIGURE_FLAGS+=(--prefix=$BASE_DIR/$OUTPUT_DIR)
+#FFMPEG_CONFIGURE_FLAGS+=(--prefix=$BASE_DIR/$OUTPUT_DIR)
 
 ./configure "${FFMPEG_CONFIGURE_FLAGS[@]}" || (cat ffbuild/config.log && exit 1)
 
 make
 make install
 
-chown $(stat -c '%u:%g' $BASE_DIR) -R $BASE_DIR/$OUTPUT_DIR
+#chown $(stat -c '%u:%g' $BASE_DIR) -R $BASE_DIR/$OUTPUT_DIR
